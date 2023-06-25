@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.projeto_pessoal_spring.domain.Client;
@@ -13,7 +14,7 @@ import br.com.trier.projeto_pessoal_spring.repositories.ClientRepository;
 import br.com.trier.projeto_pessoal_spring.services.ClientService;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.ObjectNotFoundException;
-import br.com.trier.projeto_pessoal_spring.utils.FormatCpfUtil;
+import br.com.trier.projeto_pessoal_spring.utils.CpfUtil;
 
 @Service
 public class ClientServiceImpl implements ClientService{
@@ -84,7 +85,7 @@ public class ClientServiceImpl implements ClientService{
 
 	@Override
 	public Client findByCpf(String cpf) {
-		return repository.findByCpf(FormatCpfUtil.formatCPF(cpf)).orElseThrow(() 
+		return repository.findByCpf(CpfUtil.formatCPF(cpf)).orElseThrow(() 
 				-> new ObjectNotFoundException("Cliente %s inexistente".formatted(cpf)));
 	}
 

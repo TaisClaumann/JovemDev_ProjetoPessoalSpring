@@ -2,7 +2,7 @@ package br.com.trier.projeto_pessoal_spring.utils;
 
 import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
 
-public class FormatCpfUtil {
+public class CpfUtil {
 
 	public static String formatCPF(String cpf){
 		String digitsOnly = cpf.replaceAll("\\D", "");

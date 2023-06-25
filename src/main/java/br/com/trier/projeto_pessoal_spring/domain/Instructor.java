@@ -1,30 +1,27 @@
 package br.com.trier.projeto_pessoal_spring.domain;
 
-import br.com.trier.projeto_pessoal_spring.domain.dto.ClientDTO;
+import br.com.trier.projeto_pessoal_spring.domain.dto.InstructorDTO;
 import br.com.trier.projeto_pessoal_spring.utils.CpfUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Entity(name = "aluno")
-@EqualsAndHashCode(of = "id")
-public class Client {
-
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Entity(name = "instrutor")
+public class Instructor {
+	
 	@Id
 	@Setter
-	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
@@ -34,18 +31,14 @@ public class Client {
 	@Column(unique = true)
 	private String cpf;
 	
-	@ManyToOne
-	@JoinColumn(name = "plano")
-	private Plan plan;
-	
-	public Client(ClientDTO dto) {
-		this(dto.getId(),
-			 dto.getName(), 
-			 CpfUtil.formatCPF(dto.getCpf()), 
-			 new Plan(dto.getPlanId(), dto.getPlanDescription(), dto.getPlanPrice()));
+	@Column(name = "salario")
+	private Double salary;
+
+	public Instructor(InstructorDTO dto) {
+		this(dto.getId(), dto.getName(), CpfUtil.formatCPF(dto.getCpf()), dto.getSalary());
 	}
 	
-	public ClientDTO toDTO() {
-		return new ClientDTO(id, name, cpf, plan.getId(), plan.getDescription(), plan.getPrice());
+	public InstructorDTO toDTO() {
+		return new InstructorDTO(id, name, cpf, salary);
 	}
 }
