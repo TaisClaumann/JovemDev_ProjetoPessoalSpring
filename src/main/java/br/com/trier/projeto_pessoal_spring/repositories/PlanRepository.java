@@ -13,6 +13,6 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>{
 	
 	List<Plan> findByDescriptionContainsIgnoreCase(String description);
 	Optional<Plan> findByPrice(Double price);
-	Plan findByDescriptionIgnoreCase(String description);
+	Optional<Plan> findByDescriptionIgnoreCase(String description);
 	List<Plan> findByPriceBetweenOrderByPrice(Double initialPrice, Double finalPrice);
 }

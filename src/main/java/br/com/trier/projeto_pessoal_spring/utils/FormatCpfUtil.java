@@ -1,17 +1,16 @@
 package br.com.trier.projeto_pessoal_spring.utils;
 
-import java.text.DecimalFormat;
+import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
 
 public class FormatCpfUtil {
 
 	public static String formatCPF(String cpf){
-		DecimalFormat formatation = new DecimalFormat("00000000000");
-		long numericCpf = 0L;
-		try {
-			numericCpf = Long.parseLong(cpf);
-		} catch (Exception e) {
-			return cpf;
+		String digitsOnly = cpf.replaceAll("\\D", "");
+		if(!digitsOnly.matches("[0-9]+")) {
+			throw new IntegrityViolationException("O CPF deve conter apenas números: " + cpf);
+		} else if(digitsOnly.length() != 11) {
+			throw new IntegrityViolationException("O CPF deve conter 11 números: " + cpf);
 		}
-		return formatation.format(numericCpf).replaceFirst("(\\d{3})(\\d{3})(\\d{3})", "$1.$2.$3-");
+		return digitsOnly.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
 	}
 }

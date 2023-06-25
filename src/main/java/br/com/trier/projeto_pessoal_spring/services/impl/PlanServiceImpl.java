@@ -36,7 +36,7 @@ public class PlanServiceImpl implements PlanService{
 	}
 	
 	private void validaDescription(String description) {
-		if(repository.findByDescriptionIgnoreCase(description) != null) {
+		if(repository.findByDescriptionIgnoreCase(description).isPresent()) {
 			throw new IntegrityViolationException("A descrição desse plano já existe");
 		}
 	}

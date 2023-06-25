@@ -6,12 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
-@RestController
+@RestControllerAdvice
 public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFoundException.class)

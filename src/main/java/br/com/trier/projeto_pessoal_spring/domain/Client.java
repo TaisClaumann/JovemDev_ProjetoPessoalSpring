@@ -1,11 +1,13 @@
 package br.com.trier.projeto_pessoal_spring.domain;
 
 import br.com.trier.projeto_pessoal_spring.domain.dto.ClientDTO;
+import br.com.trier.projeto_pessoal_spring.utils.FormatCpfUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,18 +27,25 @@ public class Client {
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(name = "nome")
 	private String name;
+	
 	@Column(unique = true)
 	private String cpf;
+	
 	@ManyToOne
+	@JoinColumn(name = "plano")
 	private Plan plan;
 	
 	public Client(ClientDTO dto) {
-		this(dto.getId(), dto.getName(), dto.getCpf());
+		this(dto.getId(),
+			 dto.getName(), 
+			 FormatCpfUtil.formatCPF(dto.getCpf()), 
+			 new Plan(dto.getPlanId(), dto.getPlanDescription(), dto.getPlanPrice()));
 	}
 	
 	public ClientDTO toDTO() {
-		
+		return new ClientDTO(id, name, cpf, plan.getId(), plan.getDescription(), plan.getPrice());
 	}
 }

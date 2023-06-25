@@ -1,6 +1,7 @@
 package br.com.trier.projeto_pessoal_spring.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,7 @@ import br.com.trier.projeto_pessoal_spring.repositories.ClientRepository;
 import br.com.trier.projeto_pessoal_spring.services.ClientService;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.ObjectNotFoundException;
+import br.com.trier.projeto_pessoal_spring.utils.FormatCpfUtil;
 
 @Service
 public class ClientServiceImpl implements ClientService{
@@ -33,12 +35,15 @@ public class ClientServiceImpl implements ClientService{
 		} else if(client.getCpf() == null || client.getCpf().isBlank()) {
 			throw new IntegrityViolationException("Preencha o CPF do cliente");
 		}
-		validateCpf(client.getCpf());
+		validateCpf(client);
 	}
 	
-	private void validateCpf(String cpf) {
-		if(repository.findByCpf(cpf) != null) {
-			throw new IntegrityViolationException("O CPF desse cliente já existe");
+	private void validateCpf(Client client) {
+		Optional<Client> clientFound = repository.findByCpf(client.getCpf());
+		if(clientFound.isPresent()) {
+			if(clientFound.get().getId() != client.getId()) {
+				throw new IntegrityViolationException("O CPF desse cliente já existe");
+			}
 		}
 	}
 
@@ -79,7 +84,7 @@ public class ClientServiceImpl implements ClientService{
 
 	@Override
 	public Client findByCpf(String cpf) {
-		return repository.findByCpf(cpf).orElseThrow(() 
+		return repository.findByCpf(FormatCpfUtil.formatCPF(cpf)).orElseThrow(() 
 				-> new ObjectNotFoundException("Cliente %s inexistente".formatted(cpf)));
 	}
 

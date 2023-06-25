@@ -23,8 +23,10 @@ public class Plan {
 	@Setter
 	@Column
 	private Integer id;
+	
 	@Column(name = "descricao", unique = true)
 	private String description;
+	
 	@Column(name = "preco")
 	private Double price;
 
