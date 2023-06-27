@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.projeto_pessoal_spring.domain.Instructor;
@@ -57,8 +58,7 @@ public class InstructorServiceImpl implements InstructorService{
 
 	@Override
 	public void delete(Integer id) {
-		repository.delete(findById(id));
-		
+		repository.delete(findById(id));		
 	}
 
 	@Override
@@ -66,13 +66,14 @@ public class InstructorServiceImpl implements InstructorService{
 		return repository.findById(id).orElseThrow(() 
 				-> new ObjectNotFoundException("Instrutor %s inexistente".formatted(id)));
 	}
-
+	
+	//Verificar questão do contains
 	@Override
 	public List<Instructor> listAll() {
 		if(repository.findAll().isEmpty()) {
 			throw new ObjectNotFoundException("Não há instrutores cadastrados");
 		}
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class InstructorServiceImpl implements InstructorService{
 	@Override
 	public Instructor findByCpf(String cpf) {
 		return repository.findByCpf(CpfUtil.formatCPF(cpf)).orElseThrow(() 
-				-> new ObjectNotFoundException("Instrutor %s inexistente".formatted(cpf)));
+				-> new ObjectNotFoundException("CPF %s inexistente".formatted(cpf)));
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class InstructorServiceImpl implements InstructorService{
 	public List<Instructor> findBySalaryBetween(Double initialSalary, Double finalSalary) {
 		if(repository.findBySalaryBetween(initialSalary, finalSalary).isEmpty()) {
 			throw new ObjectNotFoundException(
-					"Não há instrutores com salário entre R$%.2f a R$.2f".formatted(initialSalary, finalSalary));
+					"Não há instrutores com salário entre R$%.2f a R$%.2f".formatted(initialSalary, finalSalary));
 		}
 		return repository.findBySalaryBetween(initialSalary, finalSalary);
 	}

@@ -16,12 +16,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @Entity(name = "instrutor")
 public class Instructor {
 	
 	@Id
 	@Setter
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	

@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.trier.projeto_pessoal_spring.services.ClientService;
+import br.com.trier.projeto_pessoal_spring.services.InstructorService;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
 import br.com.trier.projeto_pessoal_spring.services.impl.ClientServiceImpl;
+import br.com.trier.projeto_pessoal_spring.services.impl.InstructorServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.PlanServiceImpl;
 
 @TestConfiguration
@@ -23,6 +25,11 @@ public class BaseTests {
 	@Bean
 	public ClientService clientService() {
 		return new ClientServiceImpl();
+	}
+	
+	@Bean
+	public InstructorService instructorService() {
+		return new InstructorServiceImpl();
 	}
 
 }
