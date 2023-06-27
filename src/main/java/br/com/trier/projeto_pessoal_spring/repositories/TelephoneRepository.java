@@ -13,7 +13,7 @@ import br.com.trier.projeto_pessoal_spring.domain.Telephone;
 @Repository
 public interface TelephoneRepository extends JpaRepository<Telephone, Integer>{
 	
-	List<Client> findByClient(Client client);
-	List<Instructor> findByInstructor(Instructor instructor);
-	Optional<Telephone> findByTelephone(Telephone telephone);
+	List<Telephone> findByClient(Client client);
+	List<Telephone> findByInstructor(Instructor instructor);
+	Optional<Telephone> findByTelephone(String telephone);
 }

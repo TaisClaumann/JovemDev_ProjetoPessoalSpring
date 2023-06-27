@@ -8,9 +8,11 @@ import org.springframework.test.context.ActiveProfiles;
 import br.com.trier.projeto_pessoal_spring.services.ClientService;
 import br.com.trier.projeto_pessoal_spring.services.InstructorService;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
+import br.com.trier.projeto_pessoal_spring.services.TelephoneService;
 import br.com.trier.projeto_pessoal_spring.services.impl.ClientServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.InstructorServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.PlanServiceImpl;
+import br.com.trier.projeto_pessoal_spring.services.impl.TelephoneServiceImpl;
 
 @TestConfiguration
 @SpringBootTest
@@ -31,5 +33,9 @@ public class BaseTests {
 	public InstructorService instructorService() {
 		return new InstructorServiceImpl();
 	}
-
+	
+	@Bean
+	public TelephoneService telephoneService() {
+		return new TelephoneServiceImpl();
+	}
 }

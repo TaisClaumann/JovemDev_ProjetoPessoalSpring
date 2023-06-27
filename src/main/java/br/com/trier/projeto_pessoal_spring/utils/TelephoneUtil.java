@@ -5,7 +5,7 @@ import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolatio
 public class TelephoneUtil {
 	
 	public static String formatTelephone(String telephone) {
-		String digitsOnly = telephone.replaceAll("[()\\.-]", "");
+		String digitsOnly = telephone.replaceAll("[()\\s\\.-]", "");
 		if(!digitsOnly.matches("[0-9]+")) {
 			throw new IntegrityViolationException("O telefone deve conter apenas números: " + telephone);
 		} else if(digitsOnly.length() != 11) {

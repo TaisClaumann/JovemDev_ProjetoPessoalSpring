@@ -1,5 +1,9 @@
 package br.com.trier.projeto_pessoal_spring.domain;
 
+import br.com.trier.projeto_pessoal_spring.domain.dto.TelephoneClientDTO;
+import br.com.trier.projeto_pessoal_spring.domain.dto.TelephoneDTO;
+import br.com.trier.projeto_pessoal_spring.domain.dto.TelephoneInstructorDTO;
+import br.com.trier.projeto_pessoal_spring.utils.TelephoneUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity(name = "telefone")
@@ -34,6 +38,56 @@ public class Telephone {
 	@JoinColumn(name = "instrutor")
 	private Instructor instructor;
 	
-	@Column(unique = true)
-	private String telefone;
+	@Column(name = "telefone")
+	private String telephone;
+	
+	public Telephone(Integer id, Client client, Instructor instructor, String telephone) {
+		this.id = id;
+		this.client = client;
+		this.instructor = instructor;
+		this.telephone = TelephoneUtil.formatTelephone(telephone);
+	}
+	
+//	public Telephone(TelephoneDTO dto, Client client, Instructor instructor) {
+//		this(dto.getId(), client, instructor, TelephoneUtil.formatTelephone(dto.getTelephone()));
+//	}
+//	
+//	public Telephone(TelephoneClientDTO dto, Client client) {
+//		this(dto.getId(), 
+//			 client,
+//			 null,
+//			 TelephoneUtil.formatTelephone(dto.getTelephone()));
+//	}
+//	
+//	public Telephone(TelephoneInstructorDTO dto, Instructor instructor) {
+//		this(dto.getId(),
+//			 null,
+//			 instructor,
+//			 TelephoneUtil.formatTelephone(dto.getTelephone()));
+//	}
+	
+	public TelephoneDTO toDTO() {
+		if(instructor == null) {
+			return new TelephoneDTO(id, 
+									client.getId(), client.getName(), client.getCpf(), 
+									null, null, null, 
+									telephone);
+		}
+		return new TelephoneDTO(id, 
+								null, null, null, 
+								instructor.getId(), instructor.getName(), instructor.getCpf(), 
+								telephone);
+	}
+	
+	public TelephoneClientDTO toClientDTO() {
+		return new TelephoneClientDTO(id,
+									  client.getId(), client.getName(), client.getCpf(),
+									  telephone);
+	}
+	
+	public TelephoneInstructorDTO toInstructorDTO() {
+		return new TelephoneInstructorDTO(id, 
+										  instructor.getId(), instructor.getName(), instructor.getCpf(),
+										  telephone);
+	}
 }
