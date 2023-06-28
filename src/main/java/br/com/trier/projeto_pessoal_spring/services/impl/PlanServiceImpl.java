@@ -1,6 +1,7 @@
 package br.com.trier.projeto_pessoal_spring.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,12 +33,15 @@ public class PlanServiceImpl implements PlanService{
 		} else if(plan.getPrice() == null || plan.getPrice() == 0) {
 			throw new IntegrityViolationException("O preço não deve ser nulo ou igual a 0");
 		}
-		validaDescription(plan.getDescription());
+		validaDescription(plan);
 	}
 	
-	private void validaDescription(String description) {
-		if(repository.findByDescriptionIgnoreCase(description).isPresent()) {
-			throw new IntegrityViolationException("A descrição desse plano já existe");
+	private void validaDescription(Plan plan) {
+		Optional<Plan> planFound = repository.findByDescriptionIgnoreCase(plan.getDescription());
+		if(planFound.isPresent()) {
+			if(!planFound.get().getId().equals(plan.getId())) {
+				throw new IntegrityViolationException("A descrição desse plano já existe");
+			}
 		}
 	}
 

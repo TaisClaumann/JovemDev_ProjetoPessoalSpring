@@ -24,7 +24,6 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 	@Override
 	public TrainingPlan insert(TrainingPlan trainingPlan) {
 		validateTrainingPlan(trainingPlan);
-		validateNameTrainingPlan(trainingPlan);
 		return repository.save(trainingPlan);
 	}
 	
@@ -34,13 +33,16 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 		} else if(trainingPlan.getName() == null || trainingPlan.getName().isBlank()) {
 			throw new IntegrityViolationException("Preencha o nome da ficha");
 		}
+		validateNameTrainingPlan(trainingPlan);
 	}
 	
 	private void validateNameTrainingPlan(TrainingPlan trainingPlan) {
 		Optional<TrainingPlan> trainingFound = repository.findByNameIgnoreCaseAndClient(trainingPlan.getName(), trainingPlan.getClient());
 		if(trainingFound.isPresent()) {
-			throw new IntegrityViolationException("O cliente %s já possui a ficha %s"
-					.formatted(trainingPlan.getClient().getName(), trainingPlan.getName()));
+			if(!trainingFound.get().getId().equals(trainingPlan.getId())) {
+				throw new IntegrityViolationException("O cliente %s já possui a ficha %s"
+						.formatted(trainingPlan.getClient().getId(), trainingPlan.getName()));
+			}
 		}
 	}
 
@@ -49,8 +51,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 		if(!listAll().contains(trainingPlan)) {
 			throw new ObjectNotFoundException("Ficha inexistente");
 		}
-		validateTrainingPlan(trainingPlan);
-		return repository.save(trainingPlan);
+		return insert(trainingPlan);
 	}
 
 	@Override
@@ -99,6 +100,6 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 	@Override
 	public TrainingPlan findByNameAndClient(String name, Client client) {
 		return repository.findByNameIgnoreCaseAndClient(name, client).orElseThrow(() 
-				-> new ObjectNotFoundException("Cliente %s não possui ficha com nome: %s".formatted(client.getName(), name)));
+				-> new ObjectNotFoundException("Cliente %s não possui ficha com nome: %s".formatted(client.getId(), name)));
 	}
 }

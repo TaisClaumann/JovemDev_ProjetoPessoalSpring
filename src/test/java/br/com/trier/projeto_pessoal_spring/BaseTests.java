@@ -10,11 +10,13 @@ import br.com.trier.projeto_pessoal_spring.services.ExerciseService;
 import br.com.trier.projeto_pessoal_spring.services.InstructorService;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
 import br.com.trier.projeto_pessoal_spring.services.TelephoneService;
+import br.com.trier.projeto_pessoal_spring.services.TrainingPlanService;
 import br.com.trier.projeto_pessoal_spring.services.impl.ClientServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.ExerciseServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.InstructorServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.PlanServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TelephoneServiceImpl;
+import br.com.trier.projeto_pessoal_spring.services.impl.TrainingPlanServiceImpl;
 
 @TestConfiguration
 @SpringBootTest
@@ -44,5 +46,10 @@ public class BaseTests {
 	@Bean
 	public ExerciseService exerciseService() {
 		return new ExerciseServiceImpl();
+	}
+	
+	@Bean
+	public TrainingPlanService trainingPlanService() {
+		return new TrainingPlanServiceImpl();
 	}
 }
