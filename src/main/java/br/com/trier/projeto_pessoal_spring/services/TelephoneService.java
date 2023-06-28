@@ -16,5 +16,5 @@ public interface TelephoneService {
 	List<Telephone> listAll();
 	List<Telephone> findByClient(Client client);
 	List<Telephone> findByInstructor(Instructor instructor);
-	Telephone findByTelephone(String telephone);
+	List<Telephone> findByTelephone(String telephone);
 }

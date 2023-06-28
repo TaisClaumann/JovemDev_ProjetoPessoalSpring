@@ -12,13 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-//@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity(name = "telefone")
@@ -48,24 +48,6 @@ public class Telephone {
 		this.telephone = TelephoneUtil.formatTelephone(telephone);
 	}
 	
-//	public Telephone(TelephoneDTO dto, Client client, Instructor instructor) {
-//		this(dto.getId(), client, instructor, TelephoneUtil.formatTelephone(dto.getTelephone()));
-//	}
-//	
-//	public Telephone(TelephoneClientDTO dto, Client client) {
-//		this(dto.getId(), 
-//			 client,
-//			 null,
-//			 TelephoneUtil.formatTelephone(dto.getTelephone()));
-//	}
-//	
-//	public Telephone(TelephoneInstructorDTO dto, Instructor instructor) {
-//		this(dto.getId(),
-//			 null,
-//			 instructor,
-//			 TelephoneUtil.formatTelephone(dto.getTelephone()));
-//	}
-	
 	public TelephoneDTO toDTO() {
 		if(instructor == null) {
 			return new TelephoneDTO(id, 
@@ -80,14 +62,12 @@ public class Telephone {
 	}
 	
 	public TelephoneClientDTO toClientDTO() {
-		return new TelephoneClientDTO(id,
-									  client.getId(), client.getName(), client.getCpf(),
-									  telephone);
+		return new TelephoneClientDTO(
+				id, client.getId(), client.getName(), client.getCpf(), telephone);
 	}
 	
 	public TelephoneInstructorDTO toInstructorDTO() {
-		return new TelephoneInstructorDTO(id, 
-										  instructor.getId(), instructor.getName(), instructor.getCpf(),
-										  telephone);
+		return new TelephoneInstructorDTO(
+				id, instructor.getId(), instructor.getName(), instructor.getCpf(), telephone);
 	}
 }

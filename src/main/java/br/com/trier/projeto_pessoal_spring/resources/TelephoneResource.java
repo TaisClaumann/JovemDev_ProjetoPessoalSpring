@@ -100,7 +100,7 @@ public class TelephoneResource {
 	}
 	
 	@GetMapping("/telephone/{telephone}")
-	public ResponseEntity<TelephoneDTO> findByTelephone(@PathVariable String telephone){
-		return ResponseEntity.ok(service.findByTelephone(telephone).toDTO());
+	public ResponseEntity<List<TelephoneDTO>> findByTelephone(@PathVariable String telephone){
+		return ResponseEntity.ok(service.findByTelephone(telephone).stream().map(Telephone::toDTO).toList());
 	}
 }

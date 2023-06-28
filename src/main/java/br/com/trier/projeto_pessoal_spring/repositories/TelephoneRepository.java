@@ -15,5 +15,5 @@ public interface TelephoneRepository extends JpaRepository<Telephone, Integer>{
 	
 	List<Telephone> findByClient(Client client);
 	List<Telephone> findByInstructor(Instructor instructor);
-	Optional<Telephone> findByTelephone(String telephone);
+	List<Telephone> findByTelephone(String telephone);
 }

@@ -24,7 +24,6 @@ public class TelephoneServiceImpl implements TelephoneService{
 	@Autowired
 	private TelephoneRepository repository;
 	
-
 	@Override
 	public Telephone insert(Telephone telephone) {
 		validateTelephone(telephone);
@@ -34,25 +33,21 @@ public class TelephoneServiceImpl implements TelephoneService{
 	private void validateTelephone(Telephone telephone) {
 		if(telephone == null) {
 			throw new IntegrityViolationException("O telefone não pode ser nulo");
-		} else if(telephone.getTelephone() == null || telephone.getTelephone().isBlank()) {
-			throw new IntegrityViolationException("Preencha o número de telefone");
 		} 
 		validatePhoneNumber(telephone);
 	}
 	
 	private void validatePhoneNumber(Telephone telephone) {
-		Optional<Telephone> telephoneFound = repository.findByTelephone(telephone.getTelephone());
-		if (telephoneFound.isPresent()) {
-			if (telephone.getInstructor() != null && telephoneFound.get().getInstructor() != null && telephoneFound.get().getId() != telephone.getId()) {
-				if (!telephoneFound.get().getInstructor().getCpf().equals(telephone.getInstructor().getCpf())) {
-					throw new IntegrityViolationException("Esse 1 telefone já existe");
+		List<Telephone> telephonesFound = repository.findByTelephone(telephone.getTelephone());
+		if (!telephonesFound.isEmpty()) {
+			for (Telephone t : telephonesFound) {
+				if(telephone.getInstructor() != null && t.getInstructor() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
+					throw new IntegrityViolationException("Esse telefone já existe");
+					
+				} else if(telephone.getClient() != null && t.getClient() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
+					throw new IntegrityViolationException("Esse telefone já existe");
 				}
-				
-			} else if (telephone.getClient() != null && telephoneFound.get().getClient() != null && telephoneFound.get().getId() != telephone.getId()) {
-				if (!telephoneFound.get().getClient().getCpf().equals(telephone.getClient().getCpf())) {
-					throw new IntegrityViolationException(" Esse 2 telefone já existe");
-				}
-			}
+			}	
 		}
 	}
 
@@ -105,9 +100,10 @@ public class TelephoneServiceImpl implements TelephoneService{
 	}
 
 	@Override
-	public Telephone findByTelephone(String telephone) {
-		return repository.findByTelephone(TelephoneUtil.formatTelephone(telephone)).orElseThrow(() 
-				-> new ObjectNotFoundException("Telefone %s não localizado"
-						.formatted(telephone)));
+	public List<Telephone> findByTelephone(String telephone) {
+		if(repository.findByTelephone(TelephoneUtil.formatTelephone(telephone)).isEmpty()) {
+			throw new ObjectNotFoundException("Telefone inexistente");
+		}
+		return repository.findByTelephone(TelephoneUtil.formatTelephone(telephone));
 	}
 }
