@@ -6,10 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.trier.projeto_pessoal_spring.domain.TrainingExercise;
+import br.com.trier.projeto_pessoal_spring.domain.dto.ReportExerciseTrendsDTO;
 import br.com.trier.projeto_pessoal_spring.services.ClientService;
 import br.com.trier.projeto_pessoal_spring.services.ExerciseService;
 import br.com.trier.projeto_pessoal_spring.services.InstructorService;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
+import br.com.trier.projeto_pessoal_spring.services.ReportService;
 import br.com.trier.projeto_pessoal_spring.services.TelephoneService;
 import br.com.trier.projeto_pessoal_spring.services.TrainingExerciseService;
 import br.com.trier.projeto_pessoal_spring.services.TrainingPlanService;
@@ -17,6 +19,7 @@ import br.com.trier.projeto_pessoal_spring.services.impl.ClientServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.ExerciseServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.InstructorServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.PlanServiceImpl;
+import br.com.trier.projeto_pessoal_spring.services.impl.ReportServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TelephoneServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TrainingExerciseServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TrainingPlanServiceImpl;
@@ -59,5 +62,10 @@ public class BaseTests {
 	@Bean
 	public TrainingExerciseService trainingExerciseService() {
 		return new TrainingExerciseServiceImpl();
+	}
+	
+	@Bean
+	public ReportService reportService() {
+		return new ReportServiceImpl();
 	}
 }
