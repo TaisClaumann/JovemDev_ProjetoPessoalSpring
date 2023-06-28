@@ -43,8 +43,11 @@ public class TelephoneServiceImpl implements TelephoneService{
 			for (Telephone t : telephonesFound) {
 				if(telephone.getInstructor() != null && t.getInstructor() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
 					throw new IntegrityViolationException("Esse telefone já existe");
-					
 				} else if(telephone.getClient() != null && t.getClient() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
+					throw new IntegrityViolationException("Esse telefone já existe");
+				} else if(telephone.getInstructor() == null && t.getClient() == null && !t.getInstructor().getCpf().equals(telephone.getClient().getCpf())) {
+					throw new IntegrityViolationException("Esse telefone já existe");
+				} else if(t.getInstructor() == null && telephone.getClient() == null && !t.getClient().getCpf().equals(telephone.getInstructor().getCpf())) {
 					throw new IntegrityViolationException("Esse telefone já existe");
 				}
 			}	
