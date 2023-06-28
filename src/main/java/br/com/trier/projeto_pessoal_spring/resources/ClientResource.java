@@ -19,7 +19,7 @@ import br.com.trier.projeto_pessoal_spring.services.ClientService;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
 
 @RestController
-@RequestMapping(value = "/client")
+@RequestMapping(value = "/clients")
 public class ClientResource {
 	
 	@Autowired

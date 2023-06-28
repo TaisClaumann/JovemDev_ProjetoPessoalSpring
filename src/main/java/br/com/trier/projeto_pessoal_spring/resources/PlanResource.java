@@ -18,7 +18,7 @@ import br.com.trier.projeto_pessoal_spring.domain.Plan;
 import br.com.trier.projeto_pessoal_spring.services.PlanService;
 
 @RestController
-@RequestMapping(value = "plan")
+@RequestMapping(value = "plans")
 public class PlanResource {
 	
 	@Autowired

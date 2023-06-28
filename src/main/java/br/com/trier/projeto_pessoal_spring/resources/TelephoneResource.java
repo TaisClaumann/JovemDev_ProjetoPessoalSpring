@@ -23,7 +23,7 @@ import br.com.trier.projeto_pessoal_spring.services.TelephoneService;
 import br.com.trier.projeto_pessoal_spring.utils.TelephoneUtil;
 
 @RestController
-@RequestMapping(value = "telephone")
+@RequestMapping(value = "telephones")
 public class TelephoneResource {
 
 	@Autowired

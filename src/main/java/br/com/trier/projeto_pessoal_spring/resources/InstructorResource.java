@@ -18,7 +18,7 @@ import br.com.trier.projeto_pessoal_spring.domain.dto.InstructorDTO;
 import br.com.trier.projeto_pessoal_spring.services.InstructorService;
 
 @RestController
-@RequestMapping(value = "/instructor")
+@RequestMapping(value = "/instructors")
 public class InstructorResource {
 	
 	@Autowired

@@ -17,7 +17,7 @@ import br.com.trier.projeto_pessoal_spring.domain.Exercise;
 import br.com.trier.projeto_pessoal_spring.services.ExerciseService;
 
 @RestController
-@RequestMapping(value = "exercise")
+@RequestMapping(value = "exercises")
 public class ExerciseResource {
 
 	@Autowired
