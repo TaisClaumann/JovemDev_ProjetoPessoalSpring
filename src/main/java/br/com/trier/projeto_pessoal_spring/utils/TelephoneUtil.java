@@ -15,7 +15,7 @@ public class TelephoneUtil {
 			throw new IntegrityViolationException("Preencha o número de telefone");
 		}
 		String digitsOnly = telephone.replaceAll("[()\\s\\.-]", "");
-		if(!digitsOnly.matches("[0-9]+")) {
+		if(!digitsOnly.matches(".*[a-zA-Z].*")) {
 			throw new IntegrityViolationException("O telefone deve conter apenas números: " + telephone);
 		} else if(digitsOnly.length() != 11) {
 			throw new IntegrityViolationException("O telefone deve conter 11 números: " + telephone);

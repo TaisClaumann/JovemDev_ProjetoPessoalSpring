@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class TrainingExerciseResource {
 	@Autowired 
 	private TrainingPlanService trainingPlanService;
 	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<TrainingExerciseDTO> insert(@RequestBody TrainingExerciseDTO trainingExerciseDTO){
 		return ResponseEntity.ok(service.insert(
@@ -40,6 +42,7 @@ public class TrainingExerciseResource {
 						  	    	 trainingExerciseDTO.getRepetition())).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<TrainingExerciseDTO> update(@PathVariable Integer id, @RequestBody TrainingExerciseDTO trainingExerciseDTO){
 		TrainingExercise trainingExercise = 
@@ -52,45 +55,53 @@ public class TrainingExerciseResource {
 		return ResponseEntity.ok(service.update(trainingExercise).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/{id}")
 	public ResponseEntity<TrainingExerciseDTO> findById(@PathVariable Integer id){
 		return ResponseEntity.ok(service.findById(id).toDTO());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping
 	public ResponseEntity<List<TrainingExerciseDTO>> listAll(){
 		return ResponseEntity.ok(service.listAll().stream().map(TrainingExercise::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/trainingPlan/{trainingPlanId}")
 	public ResponseEntity<List<TrainingExerciseDTO>> findByTrainingPlan(@PathVariable Integer trainingPlanId){
 		return ResponseEntity.ok(service.findByTrainingPlan(
 				trainingPlanService.findById(trainingPlanId)).stream().map(TrainingExercise::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/exercise/{exerciseId}")
 	public ResponseEntity<List<TrainingExerciseDTO>> findByExercise(@PathVariable Integer exerciseId){
 		return ResponseEntity.ok(service.findByExercise(
 				exerciseService.findById(exerciseId)).stream().map(TrainingExercise::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/set/{set}")
 	public ResponseEntity<List<TrainingExerciseDTO>> findBySet(@PathVariable Integer set){
 		return ResponseEntity.ok(service.findBySet(set).stream().map(TrainingExercise::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/repetition/{repetition}")
 	public ResponseEntity<List<TrainingExerciseDTO>> findByRepetition(@PathVariable Integer repetition){
 		return ResponseEntity.ok(
 				service.findByRepetition(repetition).stream().map(TrainingExercise::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/set-repetition/{set}/{repetition}")
 	public ResponseEntity<List<TrainingExerciseDTO>> findBySetAndRepetition(@PathVariable Integer set, @PathVariable Integer repetition){
 		return ResponseEntity.ok(

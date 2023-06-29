@@ -33,8 +33,6 @@ public class ClientServiceImpl implements ClientService{
 			throw new IntegrityViolationException("O cliente não pode ser nulo");
 		} else if(client.getName() == null || client.getName().isBlank()) {
 			throw new IntegrityViolationException("Preencha o nome do cliente");
-		} else if(client.getCpf() == null || client.getCpf().isBlank()) {
-			throw new IntegrityViolationException("Preencha o CPF do cliente");
 		}
 		validateCpf(client);
 	}

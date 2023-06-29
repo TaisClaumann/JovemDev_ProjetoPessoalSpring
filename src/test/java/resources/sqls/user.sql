@@ -1,0 +1,2 @@
+insert into usuario(id, nome, email, senha, permissoes) values(3, 'Usuario Test 1', 'test@teste.com.br', '123', 'ADMIN,USER');
+insert into usuario(id, nome, email, senha, permissoes) values(4, 'Usuario Test 2', 'test2@teste.com.br', '123', 'USER');

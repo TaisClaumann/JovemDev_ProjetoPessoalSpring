@@ -15,6 +15,7 @@ import br.com.trier.projeto_pessoal_spring.services.ReportService;
 import br.com.trier.projeto_pessoal_spring.services.TelephoneService;
 import br.com.trier.projeto_pessoal_spring.services.TrainingExerciseService;
 import br.com.trier.projeto_pessoal_spring.services.TrainingPlanService;
+import br.com.trier.projeto_pessoal_spring.services.UserService;
 import br.com.trier.projeto_pessoal_spring.services.impl.ClientServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.ExerciseServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.InstructorServiceImpl;
@@ -23,6 +24,7 @@ import br.com.trier.projeto_pessoal_spring.services.impl.ReportServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TelephoneServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TrainingExerciseServiceImpl;
 import br.com.trier.projeto_pessoal_spring.services.impl.TrainingPlanServiceImpl;
+import br.com.trier.projeto_pessoal_spring.services.impl.UserServiceImpl;
 
 @TestConfiguration
 @SpringBootTest
@@ -67,5 +69,10 @@ public class BaseTests {
 	@Bean
 	public ReportService reportService() {
 		return new ReportServiceImpl();
+	}
+	
+	@Bean
+	public UserService userService() {
+		return new UserServiceImpl();
 	}
 }

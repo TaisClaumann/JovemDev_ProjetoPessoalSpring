@@ -31,8 +31,6 @@ public class InstructorServiceImpl implements InstructorService{
 			throw new IntegrityViolationException("O instrutor não pode ser nulo");
 		} else if(instructor.getName() == null || instructor.getName().isBlank()) {
 			throw new IntegrityViolationException("Preencha o nome do instrutor");
-		} else if(instructor.getCpf() == null || instructor.getCpf().isBlank()) {
-			throw new IntegrityViolationException("Preencha o CPF do instrutor");
 		} else if(instructor.getSalary() == null || instructor.getSalary().equals(0.0)) {
 			throw new IntegrityViolationException("Salário inválido: R$%.2f".formatted(instructor.getSalary()));
 		}
@@ -67,7 +65,6 @@ public class InstructorServiceImpl implements InstructorService{
 				-> new ObjectNotFoundException("Instrutor %s inexistente".formatted(id)));
 	}
 	
-	//Verificar questão do contains
 	@Override
 	public List<Instructor> listAll() {
 		if(repository.findAll().isEmpty()) {

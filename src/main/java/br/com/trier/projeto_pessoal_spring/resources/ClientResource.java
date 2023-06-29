@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,14 @@ public class ClientResource {
 	@Autowired
 	private PlanService planService;
 	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO clientDTO){
 		planService.findById(clientDTO.getPlanId());
 		return ResponseEntity.ok(service.insert(new Client(clientDTO)).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO clientDTO, @PathVariable Integer id){
 		planService.findById(clientDTO.getPlanId());
@@ -41,32 +44,38 @@ public class ClientResource {
 		return ResponseEntity.ok(service.update(client).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/{id}")
 	public ResponseEntity<ClientDTO> findById(@PathVariable Integer id){
 		return ResponseEntity.ok(service.findById(id).toDTO());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping
 	public ResponseEntity<List<ClientDTO>> listaAll(){
 		return ResponseEntity.ok(service.listAll().stream().map(Client::toDTO).toList());
 	}
 
+	@Secured({"ROLE_USER"})
 	@GetMapping("/name/{name}")
 	public ResponseEntity<List<ClientDTO>> findByName(@PathVariable String name){
 		return ResponseEntity.ok(service.findByName(name).stream().map(Client::toDTO).toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/cpf/{cpf}")
 	public ResponseEntity<ClientDTO> findByCpf(@PathVariable String cpf){
 		return ResponseEntity.ok(service.findByCpf(cpf).toDTO());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/plan/{planId}")
 	public ResponseEntity<List<ClientDTO>> findByPlan(@PathVariable Integer planId){
 		return ResponseEntity.ok(service.findByPlan(
