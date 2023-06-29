@@ -40,12 +40,12 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void insertWithClientTelephoneInvalidTest() {
 		var telephone = new Telephone(
-				null, new Client(1, "Amanda", "120.000.539-25", null), null, "(48) 99666-7110");
+				null, new Client(1, "Amanda", "120.000.539-25", null), null, "48996667110");
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone));
 		assertEquals("Esse telefone já existe", exception.getMessage());
 		
 		var telephone2 = new Telephone(
-				null, new Client(3, "Douglas", "789.563.214-56", null), null, "(48) 99666-7110");
+				null, new Client(3, "Douglas", "789.563.214-56", null), null, "48996667110");
 		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone2));
 		assertEquals("Esse telefone já existe", exception2.getMessage());
 	}
@@ -57,12 +57,12 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void insertWithInstructoTelephoneInvalidTest() {
 		var telephone = new Telephone(
-				null, null, new Instructor(1, null, "123.456.789-41", null), "(48) 99666-7110");
+				null, null, new Instructor(1, null, "123.456.789-41", null), "48996667110");
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone));
 		assertEquals("Esse telefone já existe", exception.getMessage());
 		
 		var telephone2 = new Telephone(
-				null, null, new Instructor(5, null, "111.456.789-41", null), "(48) 99778-7110");
+				null, null, new Instructor(5, null, "111.456.789-41", null), "48997787110");
 		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone2));
 		assertEquals("Esse telefone já existe", exception2.getMessage());
 	}
@@ -73,7 +73,7 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/client.sql"})
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void updateTest() {
-		var telephone = new Telephone(2, new Client(1, null, null, null), null, "(48) 99656-7110");
+		var telephone = new Telephone(2, new Client(1, null, null, null), null, "48996567110");
 		service.update(telephone);
 		assertEquals("(48) 99656-7110", service.listAll().get(0).getTelephone());
 	}
@@ -95,11 +95,11 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/client.sql"})
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void updateNumberInvalidTest() {
-		var telephone = new Telephone(2, new Client(1, null, "120.000.539-25", null), null, "(48) 99778-7110");
+		var telephone = new Telephone(2, new Client(1, null, "120.000.539-25", null), null, "48997787110");
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.update(telephone));
 		assertEquals("Esse telefone já existe", exception.getMessage());
 		
-		var telephone2 = new Telephone(6, null, new Instructor(2, null, "123.444.789-41", null), "(48) 99777-7110");
+		var telephone2 = new Telephone(6, null, new Instructor(2, null, "123.444.789-41", null), "48997777110");
 		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.update(telephone2));
 		assertEquals("Esse telefone já existe", exception2.getMessage());
 	}
@@ -211,7 +211,7 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/client.sql"})
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void findByTelephoneTest() {
-		var telephones = service.findByTelephone("(48) 99666-7110");
+		var telephones = service.findByTelephone("48996667110");
 		assertEquals(2, telephones.size());
 	}
 	

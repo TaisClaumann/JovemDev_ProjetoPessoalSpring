@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.trier.projeto_pessoal_spring.domain.Client;
 import br.com.trier.projeto_pessoal_spring.domain.Instructor;
 import br.com.trier.projeto_pessoal_spring.domain.TrainingPlan;
+import br.com.trier.projeto_pessoal_spring.repositories.TrainingExerciseRepository;
 import br.com.trier.projeto_pessoal_spring.repositories.TrainingPlanRepository;
 import br.com.trier.projeto_pessoal_spring.services.TrainingPlanService;
 import br.com.trier.projeto_pessoal_spring.services.exceptions.IntegrityViolationException;
@@ -20,6 +21,8 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 
 	@Autowired
 	private TrainingPlanRepository repository;
+	@Autowired
+	private TrainingExerciseRepository trainingExercisesRepository;
 	
 	@Override
 	public TrainingPlan insert(TrainingPlan trainingPlan) {

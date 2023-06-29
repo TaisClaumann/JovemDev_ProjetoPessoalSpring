@@ -11,10 +11,10 @@ public class CpfUtil {
 	
 	public static void validateCPF(String cpf) {
 		if(cpf == null || cpf.isBlank()) {
-			throw new IntegrityViolationException("Preencha o CPF do instrutor");
+			throw new IntegrityViolationException("O CPF não pode ser vazio");
 		}
-		String digitsOnly = cpf.replaceAll("\\D", "");
-		if(!digitsOnly.matches(".*[a-zA-Z].*")) {
+		String digitsOnly = cpf.replaceAll("[^a-zA-Z0-9]", "");
+		if(digitsOnly.matches(".*[a-zA-Z].*")) {
 			throw new IntegrityViolationException("O CPF deve conter apenas números: " + cpf);
 		} else if(digitsOnly.length() != 11) {
 			throw new IntegrityViolationException("O CPF deve conter 11 números: " + cpf);

@@ -91,7 +91,7 @@ public class TrainingPlanResource {
 	}
 	
 	@Secured({"ROLE_USER"})
-	@GetMapping("/name-and-client/{clientId}/{name}")
+	@GetMapping("/name-and-client/{name}/{clientId}")
 	public ResponseEntity<TrainingPlanDTO> findByNameAndClient(@PathVariable Integer clientId, @PathVariable String name){
 		return ResponseEntity.ok(service.findByNameAndClient(name, clientService.findById(clientId)).toDTO());
 	}

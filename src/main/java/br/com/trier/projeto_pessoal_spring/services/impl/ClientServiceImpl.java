@@ -84,7 +84,7 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public Client findByCpf(String cpf) {
 		return repository.findByCpf(CpfUtil.formatCPF(cpf)).orElseThrow(() 
-				-> new ObjectNotFoundException("Cliente %s inexistente".formatted(cpf)));
+				-> new ObjectNotFoundException("Cliente %s inexistente".formatted(CpfUtil.formatCPF(cpf))));
 	}
 
 	@Override

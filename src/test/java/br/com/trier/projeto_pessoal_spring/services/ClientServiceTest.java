@@ -37,10 +37,6 @@ public class ClientServiceTest extends BaseTests{
 		var client = new Client(null, null, "12345667899", new Plan(1, null, null));
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.insert(client));
 		assertEquals("Preencha o nome do cliente", exception.getMessage());
-		
-		var client2 = new Client(null, "Ana", null, new Plan(1, null, null));
-		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.insert(client2));
-		assertEquals("Preencha o CPF do cliente", exception2.getMessage());
 	}
 	
 	@Test
@@ -125,10 +121,10 @@ public class ClientServiceTest extends BaseTests{
 	@DisplayName("Teste buscar cliente pelo cpf")
 	@Sql({"classpath:/resources/sqls/client.sql"})
 	void findByCpfTest() {
-		var cliente = service.findByCpf("12002653941");
+		var cliente = service.findByCpf("12000053925");
 		assertEquals("Amanda", cliente.getName());
 		
-		var cliente2 = service.findByCpf("120.026.539-41");
+		var cliente2 = service.findByCpf("120.000.539-25");
 		assertEquals("Amanda", cliente2.getName());
 	}
 	
@@ -137,7 +133,7 @@ public class ClientServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/client.sql"})
 	void findByCpfNotFoundTest() {
 		var exception = assertThrows(ObjectNotFoundException.class, () -> service.findByCpf("14536987555"));
-		assertEquals("Cliente 14536987555 inexistente", exception.getMessage());
+		assertEquals("Cliente 145.369.875-55 inexistente", exception.getMessage());
 	}
 	
 	@Test

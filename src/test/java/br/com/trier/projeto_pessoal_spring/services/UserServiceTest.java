@@ -158,4 +158,12 @@ public class UserServiceTest extends BaseTests{
 		assertEquals("Usuario Test 1", user.getName());
 		assertEquals("123", user.getPassword());
 	}
+	
+	@Test
+	@DisplayName("Teste buscar usuário pelo email sem achae")
+	@Sql({"classpath:/resources/sqls/user.sql"})
+	void findByEmailNotFoundTest() {
+		var exception = assertThrows(ObjectNotFoundException.class, () -> service.findByEmail("teste"));
+		assertEquals("Usuário com email teste não encontrado", exception.getMessage());
+	}
 }

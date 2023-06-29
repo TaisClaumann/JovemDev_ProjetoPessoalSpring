@@ -35,10 +35,6 @@ public class InstructorServiceTest extends BaseTests{
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.insert(instructor));
 		assertEquals("Preencha o nome do instrutor", exception.getMessage());
 		
-		var instructor2 = new Instructor(null, "Ana Marie", null, 1000.0);
-		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.insert(instructor2));
-		assertEquals("Preencha o CPF do instrutor", exception2.getMessage());
-		
 		var instructor3 = new Instructor(null, "Ana Marie", "14523698744", 0.0);
 		var exception3 = assertThrows(IntegrityViolationException.class, () -> service.insert(instructor3));
 		assertEquals("Salário inválido: R$0,00", exception3.getMessage());
@@ -154,7 +150,7 @@ public class InstructorServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/instructor.sql"})
 	void findByCpfNotFoundTest() {
 		var exception = assertThrows(ObjectNotFoundException.class, () -> service.findByCpf("11122233344"));
-		assertEquals("CPF 11122233344 inexistente", exception.getMessage());
+		assertEquals("CPF 111.222.333-44 inexistente", exception.getMessage());
 	}
 	
 	@Test

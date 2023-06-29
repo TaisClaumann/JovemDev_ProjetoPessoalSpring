@@ -84,7 +84,7 @@ public class InstructorServiceImpl implements InstructorService{
 	@Override
 	public Instructor findByCpf(String cpf) {
 		return repository.findByCpf(CpfUtil.formatCPF(cpf)).orElseThrow(() 
-				-> new ObjectNotFoundException("CPF %s inexistente".formatted(cpf)));
+				-> new ObjectNotFoundException("CPF %s inexistente".formatted(CpfUtil.formatCPF(cpf))));
 	}
 
 	@Override
