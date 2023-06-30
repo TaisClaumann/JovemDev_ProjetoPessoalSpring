@@ -57,12 +57,12 @@ public class TelephoneServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/telephone.sql"})
 	void insertWithInstructoTelephoneInvalidTest() {
 		var telephone = new Telephone(
-				null, null, new Instructor(1, null, "123.456.789-41", null), "48996667110");
+				null, null, new Instructor(1, null, "123.456.789-41", null), "(48) 99666-7110");
 		var exception = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone));
 		assertEquals("Esse telefone já existe", exception.getMessage());
 		
 		var telephone2 = new Telephone(
-				null, null, new Instructor(5, null, "111.456.789-41", null), "48997787110");
+				null, null, new Instructor(5, null, "111.456.789-41", null), "(48) 99778-7110");
 		var exception2 = assertThrows(IntegrityViolationException.class, () -> service.insert(telephone2));
 		assertEquals("Esse telefone já existe", exception2.getMessage());
 	}

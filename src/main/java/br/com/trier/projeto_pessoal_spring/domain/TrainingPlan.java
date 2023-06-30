@@ -1,8 +1,5 @@
 package br.com.trier.projeto_pessoal_spring.domain;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import br.com.trier.projeto_pessoal_spring.domain.dto.TrainingPlanDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +32,6 @@ public class TrainingPlan {
 	
 	@ManyToOne
 	@JoinColumn(name = "aluno")
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Client client;
 	
 	@ManyToOne
@@ -50,8 +46,7 @@ public class TrainingPlan {
 	}
 	
 	public TrainingPlanDTO toDTO() {
-		return new TrainingPlanDTO(id, name, 
-								   client.toDTO(),
-								   instructor.getId(), instructor.getName(), instructor.getCpf());
+		return new TrainingPlanDTO(
+				id, name, client.toDTO(), instructor.getId(), instructor.getName(), instructor.getCpf());
 	}
 }

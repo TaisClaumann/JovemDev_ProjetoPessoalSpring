@@ -19,9 +19,9 @@ import lombok.Setter;
 public class Plan {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter
 	@Column
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "descricao", unique = true)

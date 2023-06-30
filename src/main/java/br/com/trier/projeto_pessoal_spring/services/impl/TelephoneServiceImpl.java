@@ -38,20 +38,27 @@ public class TelephoneServiceImpl implements TelephoneService{
 	}
 	
 	private void validatePhoneNumber(Telephone telephone) {
-		List<Telephone> telephonesFound = repository.findByTelephone(telephone.getTelephone());
-		if (!telephonesFound.isEmpty()) {
-			for (Telephone t : telephonesFound) {
-				if(telephone.getInstructor() != null && t.getInstructor() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
-					throw new IntegrityViolationException("Esse telefone já existe");
-				} else if(telephone.getClient() != null && t.getClient() != null && (telephone.getId() == null || t.getId() != telephone.getId())) {
-					throw new IntegrityViolationException("Esse telefone já existe");
-				} else if(telephone.getInstructor() == null && t.getClient() == null && !t.getInstructor().getCpf().equals(telephone.getClient().getCpf())) {
-					throw new IntegrityViolationException("Esse telefone já existe");
-				} else if(t.getInstructor() == null && telephone.getClient() == null && !t.getClient().getCpf().equals(telephone.getInstructor().getCpf())) {
-					throw new IntegrityViolationException("Esse telefone já existe");
-				}
-			}	
-		}
+	    boolean phoneNumberExists = repository.findByTelephone(telephone.getTelephone()).stream()
+	        .filter(t -> telephone.getId() == null || !t.getId().equals(telephone.getId()))
+	        .anyMatch(t -> isInstructorOrClientTelephone(telephone, t) || !hasMatchingInstructorAndClient(telephone, t));
+	    
+	    if (phoneNumberExists) {
+	        throw new IntegrityViolationException("Esse telefone já existe");
+	    }
+	}
+
+	private boolean isInstructorOrClientTelephone(Telephone telephone, Telephone existingTelephone) {
+	    return telephone.getInstructor() != null && existingTelephone.getInstructor() != null &&
+	            !existingTelephone.getInstructor().getCpf().equals(telephone.getInstructor().getCpf()) ||
+	            telephone.getClient() != null && existingTelephone.getClient() != null &&
+	            !existingTelephone.getClient().getCpf().equals(telephone.getClient().getCpf());
+	}
+	
+	private boolean hasMatchingInstructorAndClient(Telephone telephone, Telephone existingTelephone) {
+	    return telephone.getInstructor() == null && existingTelephone.getClient() == null &&
+	            existingTelephone.getInstructor().getCpf().equals(telephone.getClient().getCpf()) ||
+	            telephone.getClient() == null && existingTelephone.getInstructor() == null &&
+	            existingTelephone.getClient().getCpf().equals(telephone.getInstructor().getCpf());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package br.com.trier.projeto_pessoal_spring.domain;
 
 import br.com.trier.projeto_pessoal_spring.domain.dto.UserDTO;
+import br.com.trier.projeto_pessoal_spring.utils.LoginUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,11 +39,10 @@ public class User {
 	private String roles;
 	
 	public User(UserDTO dto) {
-		this(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword(), dto.getRoles());
+		this(dto.getId(), dto.getName(), LoginUtil.validateEmail(dto.getEmail()), LoginUtil.validatePassword(dto.getPassword()), dto.getRoles());
 	}
 	
 	public UserDTO toDTO() {
 		return new UserDTO(this.id, this.name, this.email, this.password, this.roles);
 	}
-
 }

@@ -50,15 +50,11 @@ public class Telephone {
 	
 	public TelephoneDTO toDTO() {
 		if(instructor == null) {
-			return new TelephoneDTO(id, 
-									client.getId(), client.getName(), client.getCpf(), 
-									null, null, null, 
-									telephone);
+			return new TelephoneDTO(
+					id, client.getId(), client.getName(), client.getCpf(), null, null, null, telephone);
 		}
-		return new TelephoneDTO(id, 
-								null, null, null, 
-								instructor.getId(), instructor.getName(), instructor.getCpf(), 
-								telephone);
+		return new TelephoneDTO(
+				id, null, null, null, instructor.getId(), instructor.getName(), instructor.getCpf(), telephone);
 	}
 	
 	public TelephoneClientDTO toClientDTO() {

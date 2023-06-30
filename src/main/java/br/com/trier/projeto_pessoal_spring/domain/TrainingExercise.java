@@ -50,10 +50,8 @@ public class TrainingExercise {
 	}
 	
 	public TrainingExerciseDTO toDTO() {
-		return new TrainingExerciseDTO(id, 
-									   trainingPlan.toDTO(), 
-									   exercise.getId(), exercise.getDescription(),
-									   set, repetition);
+		return new TrainingExerciseDTO(
+				id, trainingPlan.toDTO(), exercise.getId(), exercise.getDescription(),set, repetition);
 	}
 	
 }

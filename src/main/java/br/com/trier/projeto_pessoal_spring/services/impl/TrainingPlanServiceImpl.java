@@ -21,8 +21,6 @@ public class TrainingPlanServiceImpl implements TrainingPlanService{
 
 	@Autowired
 	private TrainingPlanRepository repository;
-	@Autowired
-	private TrainingExerciseRepository trainingExercisesRepository;
 	
 	@Override
 	public TrainingPlan insert(TrainingPlan trainingPlan) {
